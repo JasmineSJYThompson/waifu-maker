@@ -1,0 +1,416 @@
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.avatar {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.avatar-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.avatar-head {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* Eyes */
+.eyes {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 40px;
+  z-index: 10;
+}
+
+.eye {
+  width: 25px;
+  height: 25px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.eye-inner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #333;
+  position: relative;
+}
+
+/* Eye expressions */
+.eye-inner.happy {
+  background: #333;
+  transform: scaleY(0.7);
+}
+
+.eye-inner.focused {
+  background: #333;
+  transform: scaleX(1.2);
+}
+
+.eye-inner.sparkly {
+  background: #333;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.eye-inner.sparkly::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+}
+
+.eye-inner.relaxed {
+  background: #333;
+  transform: scaleY(0.8);
+}
+
+/* Mouth */
+.mouth-container {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 20px;
+  z-index: 10;
+}
+
+.mouth {
+  width: 100%;
+  height: 100%;
+  background: #333;
+  border-radius: 0 0 20px 20px;
+  transition: all 0.2s ease;
+}
+
+/* Mouth expressions */
+.mouth.smile {
+  border-radius: 0 0 40px 40px;
+  height: 15px;
+}
+
+.mouth.neutral {
+  border-radius: 0 0 20px 20px;
+  height: 8px;
+}
+
+.mouth.grin {
+  border-radius: 0 0 50px 50px;
+  height: 20px;
+}
+
+.mouth.slight-smile {
+  border-radius: 0 0 30px 30px;
+  height: 12px;
+}
+
+.mouth.open {
+  border-radius: 50%;
+  height: 25px;
+  background: #FF6B6B;
+}
+
+/* Cheeks */
+.cheeks {
+  position: absolute;
+  top: 45%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.cheek {
+  width: 30px;
+  height: 15px;
+  background: rgba(255, 182, 193, 0.6);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+/* Status Indicators */
+.speaking-indicator {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  z-index: 20;
+}
+
+.sound-waves {
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+}
+
+.wave {
+  width: 4px;
+  background: #667eea;
+  border-radius: 2px;
+  animation: soundWave 0.6s ease-in-out infinite;
+}
+
+.wave:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+}
+
+.wave:nth-child(2) {
+  height: 12px;
+  animation-delay: 0.2s;
+}
+
+.wave:nth-child(3) {
+  height: 8px;
+  animation-delay: 0.4s;
+}
+
+@keyframes soundWave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.5); }
+}
+
+.listening-indicator {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  z-index: 20;
+}
+
+.listening-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  background: #667eea;
+  border-radius: 50%;
+  animation: listeningPulse 1.4s ease-in-out infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes listeningPulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Personality Badge */
+.personality-badge {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 15;
+}
+
+/* Status Text */
+.avatar-status {
+  text-align: center;
+  min-height: 20px;
+}
+
+.status-text {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.status-text.speaking {
+  background: rgba(102, 126, 234, 0.2);
+  color: #667eea;
+}
+
+.status-text.listening {
+  background: rgba(255, 193, 7, 0.2);
+  color: #FFC107;
+}
+
+.status-text.idle {
+  background: rgba(40, 167, 69, 0.2);
+  color: #28A745;
+}
+
+/* Personality-specific colors */
+.avatar-background[style*="FFB6C1"] {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%) !important;
+}
+
+.avatar-background[style*="87CEEB"] {
+  background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%) !important;
+}
+
+.avatar-background[style*="DDA0DD"] {
+  background: linear-gradient(135deg, #DDA0DD 0%, #E6E6FA 100%) !important;
+}
+
+.avatar-background[style*="98FB98"] {
+  background: linear-gradient(135deg, #98FB98 0%, #90EE90 100%) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .eyes {
+    gap: 30px;
+  }
+  
+  .eye {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .eye-inner {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .mouth-container {
+    width: 30px;
+    height: 15px;
+  }
+  
+  .cheek {
+    width: 25px;
+    height: 12px;
+  }
+  
+  .personality-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .eyes {
+    gap: 25px;
+  }
+  
+  .eye {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .eye-inner {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .mouth-container {
+    width: 25px;
+    height: 12px;
+  }
+  
+  .cheek {
+    width: 20px;
+    height: 10px;
+  }
+  
+  .avatar-container {
+    padding: 15px;
+  }
+}
+
+/* Hover effects */
+.avatar:hover .avatar-background {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.avatar:hover .eye-inner {
+  transform: scale(1.1);
+}
+
+/* Focus states for accessibility */
+.avatar:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 4px;
+}
+
+/* Animation for avatar entrance */
+@keyframes avatarEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.avatar-container {
+  animation: avatarEntrance 0.6s ease-out;
+} 
