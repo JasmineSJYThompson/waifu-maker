@@ -16,26 +16,30 @@
   height: 200px;
   cursor: pointer;
   user-select: none;
-}
-
-.avatar-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+  overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 
-.avatar-head {
-  position: relative;
+/* Avatar Image and Video Styles */
+.avatar-image,
+.avatar-video {
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border-radius: 50%;
-  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.idle-avatar {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+}
+
+.talking-video {
+  background: #000;
 }
 
 /* Eyes */
@@ -381,10 +385,15 @@
   .avatar-container {
     padding: 15px;
   }
+  
+  .personality-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
 }
 
 /* Hover effects */
-.avatar:hover .avatar-background {
+.avatar:hover {
   transform: scale(1.05);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
 }
@@ -413,4 +422,45 @@
 
 .avatar-container {
   animation: avatarEntrance 0.6s ease-out;
+}
+
+/* Video loading states */
+.avatar-video {
+  background: #f0f0f0;
+}
+
+.avatar-video:not([src]) {
+  display: none;
+}
+
+/* Ensure smooth transitions between idle and talking states */
+.avatar-image,
+.avatar-video {
+  transition: opacity 0.3s ease;
+}
+
+/* Loading indicator for video */
+.avatar-video::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #667eea;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 10;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Hide loading indicator when video is playing */
+.avatar-video[src]:not([paused])::before {
+  display: none;
 } 

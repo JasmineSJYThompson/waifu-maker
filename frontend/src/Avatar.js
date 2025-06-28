@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSpring, animated } from 'react-spring';
 import './Avatar.css';
 
 const Avatar = ({ 
@@ -10,87 +9,65 @@ const Avatar = ({
   currentMessage = '',
   onAvatarClick 
 }) => {
-  const [mouthOpen, setMouthOpen] = useState(false);
-  const [blink, setBlink] = useState(false);
-  const [expression, setExpression] = useState('neutral');
-  const audioRef = useRef(null);
-  const lipSyncInterval = useRef(null);
+  const [currentVideo, setCurrentVideo] = useState(null);
+  const [showIdle, setShowIdle] = useState(true);
+  const videoRef = useRef(null);
+  const idleImageRef = useRef(null);
 
-  // Spring animations for smooth movements
-  const headBob = useSpring({
-    transform: isSpeaking ? 'translateY(-2px)' : 'translateY(0px)',
-    config: { tension: 300, friction: 20 }
-  });
-
-  const eyeBlink = useSpring({
-    scaleY: blink ? 0.1 : 1,
-    config: { tension: 400, friction: 30 }
-  });
-
-  const mouthAnimation = useSpring({
-    scaleY: mouthOpen ? 1.2 : 0.8,
-    config: { tension: 500, friction: 25 }
-  });
-
-  // Personality-based expressions
-  const getExpression = (personality) => {
-    const expressions = {
-      friendly: { eyes: 'happy', mouth: 'smile', color: '#FFB6C1' },
-      professional: { eyes: 'focused', mouth: 'neutral', color: '#87CEEB' },
-      creative: { eyes: 'sparkly', mouth: 'grin', color: '#DDA0DD' },
-      casual: { eyes: 'relaxed', mouth: 'slight-smile', color: '#98FB98' }
-    };
-    return expressions[personality] || expressions.friendly;
+  // Determine which video to use based on message length
+  const getVideoSource = (message) => {
+    if (!message) return null;
+    const wordCount = message.split(' ').length;
+    // Use talking_long.mp4 for longer messages (more than 10 words)
+    return wordCount > 10 ? '/talking_long.mp4' : '/talking.mp4';
   };
 
-  const currentExpression = getExpression(personality);
-
-  // Lip sync animation
+  // Handle video playback
   useEffect(() => {
     if (isSpeaking && currentMessage) {
-      // Calculate words per second for lip sync
-      const words = currentMessage.split(' ').length;
-      const estimatedDuration = words * 0.5; // Rough estimate: 0.5 seconds per word
-      const lipSyncSpeed = Math.max(100, Math.min(300, estimatedDuration * 1000 / words));
-
-      lipSyncInterval.current = setInterval(() => {
-        setMouthOpen(prev => !prev);
-      }, lipSyncSpeed);
-
-      return () => {
-        if (lipSyncInterval.current) {
-          clearInterval(lipSyncInterval.current);
-          setMouthOpen(false);
-        }
-      };
-    } else {
-      setMouthOpen(false);
-      if (lipSyncInterval.current) {
-        clearInterval(lipSyncInterval.current);
+      const videoSource = getVideoSource(currentMessage);
+      setCurrentVideo(videoSource);
+      setShowIdle(false);
+      
+      // Start video playback
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(err => {
+          console.error('Error playing video:', err);
+          setShowIdle(true);
+        });
       }
+    } else {
+      // Stop video and show idle
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
+      setShowIdle(true);
+      setCurrentVideo(null);
     }
   }, [isSpeaking, currentMessage]);
 
-  // Blinking animation
-  useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      setBlink(true);
-      setTimeout(() => setBlink(false), 150);
-    }, 3000 + Math.random() * 2000);
-
-    return () => clearInterval(blinkInterval);
-  }, []);
-
-  // Expression changes based on personality and state
-  useEffect(() => {
-    if (isListening) {
-      setExpression('attentive');
-    } else if (isSpeaking) {
-      setExpression('speaking');
+  // Handle video end
+  const handleVideoEnd = () => {
+    if (isSpeaking) {
+      // Loop the video while still speaking
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play().catch(err => {
+          console.error('Error looping video:', err);
+          setShowIdle(true);
+        });
+      }
     } else {
-      setExpression('neutral');
+      setShowIdle(true);
     }
-  }, [isSpeaking, isListening]);
+  };
+
+  // Handle video error
+  const handleVideoError = () => {
+    console.error('Video playback error');
+    setShowIdle(true);
+  };
 
   const handleAvatarClick = () => {
     if (onAvatarClick) {
@@ -109,47 +86,42 @@ const Avatar = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Avatar Background */}
-        <animated.div 
-          className="avatar-background"
-          style={{
-            ...headBob,
-            backgroundColor: currentExpression.color
-          }}
-        />
+        {/* Idle Avatar Image */}
+        <AnimatePresence>
+          {showIdle && (
+            <motion.img
+              ref={idleImageRef}
+              src="/idle_avatar.png"
+              alt="Idle Avatar"
+              className="avatar-image idle-avatar"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          )}
+        </AnimatePresence>
 
-        {/* Head */}
-        <div className="avatar-head">
-          {/* Eyes */}
-          <div className="eyes">
-            <animated.div 
-              className="eye left-eye"
-              style={eyeBlink}
+        {/* Talking Video */}
+        <AnimatePresence>
+          {!showIdle && currentVideo && (
+            <motion.video
+              ref={videoRef}
+              className="avatar-video talking-video"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onEnded={handleVideoEnd}
+              onError={handleVideoError}
+              muted
+              playsInline
             >
-              <div className={`eye-inner ${currentExpression.eyes}`} />
-            </animated.div>
-            <animated.div 
-              className="eye right-eye"
-              style={eyeBlink}
-            >
-              <div className={`eye-inner ${currentExpression.eyes}`} />
-            </animated.div>
-          </div>
-
-          {/* Mouth */}
-          <animated.div 
-            className="mouth-container"
-            style={mouthAnimation}
-          >
-            <div className={`mouth ${currentExpression.mouth} ${mouthOpen ? 'open' : ''}`} />
-          </animated.div>
-
-          {/* Cheeks */}
-          <div className="cheeks">
-            <div className="cheek left-cheek" />
-            <div className="cheek right-cheek" />
-          </div>
-        </div>
+              <source src={currentVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </motion.video>
+          )}
+        </AnimatePresence>
 
         {/* Status Indicators */}
         <AnimatePresence>

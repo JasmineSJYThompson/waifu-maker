@@ -19,11 +19,13 @@ A modern web application that combines ElevenLabs voice generation with Mistral 
 - **Visual Feedback**: Avatar expressions and status indicators
 
 ### 🎭 Avatar Features
-- **Real-time Lip-sync**: Mouth animations based on speech timing
-- **Personality-based Expressions**: Different visual styles for different AI personalities
+- **Video-based Avatar**: Realistic talking animations using video files
+- **Smart Video Selection**: Automatically chooses between talking.mp4 and talking_long.mp4 based on message length
+- **Idle State**: Shows idle_avatar.png when not speaking
+- **Seamless Transitions**: Smooth transitions between idle and talking states
 - **Status Indicators**: Visual feedback for speaking, listening, and idle states
 - **Responsive Design**: Adapts to different screen sizes
-- **Smooth Animations**: Powered by Framer Motion and React Spring
+- **Looping Animation**: Videos loop during speech for continuous talking effect
 
 ### 🎨 Modern UI
 - **Glassmorphism Design**: Beautiful glass-like interface
@@ -130,16 +132,20 @@ MISTRAL_API_KEY=your_mistral_api_key
 
 ## 🎨 Customization
 
-### Avatar Personalities
-The avatar adapts its visual style based on the AI personality:
+### Avatar Videos
+The avatar uses video files for realistic talking animations:
 
-- **Friendly**: Warm pink colors, happy expressions
-- **Professional**: Cool blue colors, focused expressions  
-- **Creative**: Purple colors, sparkly eyes
-- **Casual**: Green colors, relaxed expressions
+- **idle_avatar.png**: Static image shown when not speaking
+- **talking.mp4**: Short talking animation for brief messages (≤10 words)
+- **talking_long.mp4**: Longer talking animation for extended messages (>10 words)
+
+### Video Selection Logic
+The system automatically chooses the appropriate video based on message length:
+- Messages with 10 words or fewer use `talking.mp4`
+- Messages with more than 10 words use `talking_long.mp4`
 
 ### Custom Personalities
-Write custom personality descriptions to create unique AI behaviors and avatar appearances.
+Write custom personality descriptions to create unique AI behaviors. The personality badge on the avatar will display the detected personality type.
 
 ## 📱 API Endpoints
 
@@ -160,11 +166,16 @@ waifu_maker/
 │   ├── app.py              # Flask API server
 │   └── env.example         # Environment variables template
 ├── frontend/
+│   ├── public/
+│   │   ├── idle_avatar.png # Idle avatar image
+│   │   ├── talking.mp4     # Short talking animation
+│   │   ├── talking_long.mp4 # Long talking animation
+│   │   └── index.html      # Main HTML file
 │   ├── src/
 │   │   ├── App.js          # Main app component
 │   │   ├── VoiceGenerator.js # Voice generation page
 │   │   ├── Talk.js         # Chat page with avatar
-│   │   ├── Avatar.js       # 2D talking avatar component
+│   │   ├── Avatar.js       # Video-based avatar component
 │   │   └── *.css           # Component styles
 │   └── package.json        # Frontend dependencies
 ├── requirements.txt        # Python dependencies
@@ -172,9 +183,10 @@ waifu_maker/
 ```
 
 ### Adding New Features
-- **New Avatar Expressions**: Modify `Avatar.js` and `Avatar.css`
+- **New Avatar Videos**: Replace or add new video files in `frontend/public/`
+- **Video Selection Logic**: Modify the word count threshold in `Avatar.js`
 - **Additional Personalities**: Update personality presets in `Talk.js`
-- **Custom Animations**: Extend Framer Motion animations in `Avatar.js`
+- **Custom Animations**: Extend Framer Motion animations for transitions
 
 ## 🐛 Troubleshooting
 

@@ -159,6 +159,15 @@ function Talk() {
         setError('Failed to play audio.');
       });
       
+      // Add timeupdate listener to sync with video
+      audio.addEventListener('timeupdate', () => {
+        // Keep speaking state active while audio is playing
+        if (audio.currentTime > 0 && !audio.paused) {
+          setIsSpeaking(true);
+          setCurrentSpeakingMessage(messageText);
+        }
+      });
+      
       audio.play().catch(err => {
         console.error('Error playing audio:', err);
         setError('Failed to play audio.');
