@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .avatar {
@@ -18,8 +18,154 @@
   user-select: none;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.avatar-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 3px solid #ddd;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+.avatar-image.talking {
+  border-color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background: #666;
+  transition: background-color 0.2s ease;
+}
+
+.status-indicator.talking {
+  background: #333;
+  animation: pulse 1.5s infinite;
+}
+
+.status-indicator.listening {
+  background: #333;
+  animation: pulse 1.5s infinite;
+}
+
+.avatar-info {
+  text-align: center;
+  color: #333;
+}
+
+.avatar-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.avatar-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .avatar {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .avatar-image {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .avatar-container {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .avatar-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .avatar-info h3 {
+    font-size: 0.9rem;
+  }
+  
+  .avatar-info p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-container {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .avatar-image {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Avatar Image and GIF Styles */
@@ -34,12 +180,22 @@
   left: 0;
 }
 
-.idle-avatar {
-  background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
+/* Specific styling for idle avatar image */
+.avatar-image.idle-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .talking-gif {
-  background: #000;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* Eyes */
@@ -313,83 +469,6 @@
 
 .avatar-background[style*="98FB98"] {
   background: linear-gradient(135deg, #98FB98 0%, #90EE90 100%) !important;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .avatar {
-    width: 150px;
-    height: 150px;
-  }
-  
-  .eyes {
-    gap: 30px;
-  }
-  
-  .eye {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .eye-inner {
-    width: 12px;
-    height: 12px;
-  }
-  
-  .mouth-container {
-    width: 30px;
-    height: 15px;
-  }
-  
-  .cheek {
-    width: 25px;
-    height: 12px;
-  }
-  
-  .personality-badge {
-    font-size: 11px;
-    padding: 3px 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .avatar {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .eyes {
-    gap: 25px;
-  }
-  
-  .eye {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .eye-inner {
-    width: 10px;
-    height: 10px;
-  }
-  
-  .mouth-container {
-    width: 25px;
-    height: 12px;
-  }
-  
-  .cheek {
-    width: 20px;
-    height: 10px;
-  }
-  
-  .avatar-container {
-    padding: 15px;
-  }
-  
-  .personality-badge {
-    font-size: 10px;
-    padding: 2px 8px;
-  }
 }
 
 /* Hover effects */

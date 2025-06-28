@@ -1,6 +1,6 @@
 # Waifu Maker - AI Voice Generation & Chat
 
-A modern web application that combines ElevenLabs voice generation with Mistral AI for interactive conversations. Features a 2D talking avatar that visualizes AI speech with lip-sync animations.
+A modern web application that combines ElevenLabs voice generation with Mistral AI for interactive conversations. Features a 2D talking avatar that visualizes AI speech with lip-sync animations, plus a VTuber mode with Live2D Cubism SDK integration.
 
 ## ✨ Features
 
@@ -27,10 +27,19 @@ A modern web application that combines ElevenLabs voice generation with Mistral 
 - **Responsive Design**: Adapts to different screen sizes
 - **Automatic Looping**: GIFs loop during speech for continuous talking effect
 
+### 🎭 VTuber Mode (Live2D Integration)
+- **Live2D Cubism SDK**: Full integration with Live2D models for professional VTuber streaming
+- **Real-time Lip-sync**: Advanced audio analysis for precise mouth movements
+- **Audio-driven Animation**: Live2D parameters controlled by ElevenLabs audio output
+- **Professional Layout**: Three-column design with voice selection, Live2D canvas, and chat
+- **Status Monitoring**: Real-time feedback on model loading, audio context, and lip-sync status
+- **Responsive Canvas**: Adaptive Live2D model display with proper scaling
+- **Audio Analysis**: Frequency-based parameter mapping for natural animations
+
 ### 🎨 Modern UI
-- **Glassmorphism Design**: Beautiful glass-like interface
+- **Clean Design**: Simple, flat white and gray interface
 - **Responsive Layout**: Works on desktop, tablet, and mobile
-- **Dark Theme**: Easy on the eyes with modern aesthetics
+- **Consistent Spacing**: Uniform padding and margins throughout
 - **Smooth Transitions**: Fluid animations throughout the app
 
 ## 🚀 Quick Start
@@ -111,6 +120,16 @@ A modern web application that combines ElevenLabs voice generation with Mistral 
    - Display personality-based expressions
    - Provide visual feedback for all states
 
+### VTuber Mode (Live2D)
+1. Navigate to the **VTuber Mode** page
+2. Select your preferred ElevenLabs voice
+3. Ensure Live2D Cubism SDK is properly set up (see setup guide)
+4. Load your Live2D model in the canvas area
+5. Start chatting to see real-time lip-sync with your Live2D model
+6. Monitor the status panel for model and audio context information
+
+**Note**: VTuber mode requires Live2D Cubism SDK license and proper model setup. See `frontend/public/live2d-setup.html` for detailed setup instructions.
+
 ### Avatar Interactions
 - **Click the avatar** for additional interactions (customizable)
 - **Watch the expressions** change based on personality and conversation state
@@ -170,12 +189,15 @@ waifu_maker/
 │   │   ├── idle_avatar.png # Idle avatar image
 │   │   ├── talking.gif     # Short talking animation
 │   │   ├── talking_long.gif # Long talking animation
+│   │   ├── live2d-setup.html # Live2D setup guide
 │   │   └── index.html      # Main HTML file
 │   ├── src/
 │   │   ├── App.js          # Main app component
 │   │   ├── VoiceGenerator.js # Voice generation page
 │   │   ├── Talk.js         # Chat page with avatar
+│   │   ├── VTuber.js       # VTuber mode with Live2D
 │   │   ├── Avatar.js       # GIF-based avatar component
+│   │   ├── VTuber.css      # VTuber page styles
 │   │   └── *.css           # Component styles
 │   └── package.json        # Frontend dependencies
 ├── requirements.txt        # Python dependencies
@@ -187,6 +209,8 @@ waifu_maker/
 - **GIF Selection Logic**: Modify the word count threshold in `Avatar.js`
 - **Additional Personalities**: Update personality presets in `Talk.js`
 - **Custom Animations**: Extend Framer Motion animations for transitions
+- **Live2D Models**: Add your Live2D models to `frontend/public/models/`
+- **VTuber Enhancements**: Extend lip-sync parameters in `VTuber.js`
 
 ## 🐛 Troubleshooting
 

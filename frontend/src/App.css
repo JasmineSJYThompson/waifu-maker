@@ -1,3 +1,282 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: #f5f5f5;
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.App-header {
+  background: white;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.App-header p {
+  margin: 8px 0 0 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+.App-content {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Global button styles */
+.btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.btn:hover {
+  background: #f0f0f0;
+  border-color: #ccc;
+}
+
+.btn:focus {
+  outline: none;
+  border-color: #999;
+}
+
+.btn-primary {
+  background: #333;
+  color: white;
+  border-color: #333;
+}
+
+.btn-primary:hover {
+  background: #555;
+  border-color: #555;
+}
+
+.btn-secondary {
+  background: #666;
+  color: white;
+  border-color: #666;
+}
+
+.btn-secondary:hover {
+  background: #555;
+  border-color: #555;
+}
+
+.btn-danger {
+  background: #333;
+  color: white;
+  border-color: #333;
+}
+
+.btn-danger:hover {
+  background: #555;
+  border-color: #555;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Global input styles */
+input, textarea, select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  font-size: 0.875rem;
+  background: white;
+  color: #333;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #999;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #999;
+}
+
+/* Global card styles */
+.card {
+  background: white;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+/* Global section styles */
+.section {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-header p {
+  margin: 4px 0 0 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+/* Global error styles */
+.error {
+  background: #f0f0f0;
+  color: #333;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  font-size: 0.875rem;
+}
+
+/* Global success styles */
+.success {
+  background: #f0f0f0;
+  color: #333;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  font-size: 0.875rem;
+}
+
+/* Global loading styles */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-top: 2px solid #333;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Global tooltip styles */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 16px 0;
+  }
+  
+  .App-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .App-header p {
+    font-size: 0.875rem;
+  }
+  
+  .App-content {
+    padding: 16px;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    padding: 12px 0;
+  }
+  
+  .App-header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .App-content {
+    padding: 12px;
+  }
+  
+  .card {
+    padding: 12px;
+  }
+}
+
 .loading-container {
   display: flex;
   align-items: center;

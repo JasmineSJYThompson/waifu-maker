@@ -152,11 +152,6 @@ const Avatar = ({
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Personality Badge */}
-        <div className="personality-badge">
-          {personality.charAt(0).toUpperCase() + personality.slice(1)}
-        </div>
       </motion.div>
 
       {/* Status Text */}
