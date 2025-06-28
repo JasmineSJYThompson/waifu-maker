@@ -22,9 +22,9 @@
   transition: all 0.3s ease;
 }
 
-/* Avatar Image and Video Styles */
+/* Avatar Image and GIF Styles */
 .avatar-image,
-.avatar-video {
+.avatar-gif {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -38,7 +38,7 @@
   background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 100%);
 }
 
-.talking-video {
+.talking-gif {
   background: #000;
 }
 
@@ -424,43 +424,78 @@
   animation: avatarEntrance 0.6s ease-out;
 }
 
-/* Video loading states */
-.avatar-video {
+/* GIF loading states */
+.avatar-gif {
   background: #f0f0f0;
 }
 
-.avatar-video:not([src]) {
+.avatar-gif:not([src]) {
   display: none;
 }
 
-/* Ensure smooth transitions between idle and talking states */
-.avatar-image,
-.avatar-video {
-  transition: opacity 0.3s ease;
-}
-
-/* Loading indicator for video */
-.avatar-video::before {
-  content: '';
+/* GIF loading indicator */
+.gif-loading {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  border: 2px solid #667eea;
-  border-top: 2px solid transparent;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
   z-index: 10;
 }
 
-@keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(102, 126, 234, 0.3);
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-/* Hide loading indicator when video is playing */
-.avatar-video[src]:not([paused])::before {
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* GIF error indicator */
+.gif-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 10;
+}
+
+/* Ensure smooth transitions between idle and talking states */
+.avatar-image,
+.avatar-gif {
+  transition: opacity 0.3s ease;
+}
+
+/* Remove the old loading indicator */
+.avatar-gif::before {
   display: none;
+}
+
+/* Click to enable indicator */
+.click-to-enable {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 10;
+  text-align: center;
+  max-width: 120px;
+  line-height: 1.2;
 } 

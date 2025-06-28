@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Mic, Play, Download, Volume2, Loader, MessageCircle, Home } from 'lucide-react';
+import { Mic, Play, Download, Volume2, Loader, MessageCircle, Home, Video } from 'lucide-react';
 import VoiceGenerator from './VoiceGenerator';
 import Talk from './Talk';
+import VideoTest from './VideoTest';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('voice'); // 'voice' or 'talk'
+  const [currentPage, setCurrentPage] = useState('voice'); // 'voice', 'talk', or 'test'
   const [text, setText] = useState('');
   const [selectedVoice, setSelectedVoice] = useState('');
   const [voices, setVoices] = useState([]);
@@ -163,10 +164,23 @@ function App() {
             <MessageCircle size={20} />
             Talk with AI
           </button>
+          <button
+            className={`nav-button ${currentPage === 'test' ? 'active' : ''}`}
+            onClick={() => setCurrentPage('test')}
+          >
+            <Video size={20} />
+            Video Test
+          </button>
         </div>
 
         {/* Page Content */}
-        {currentPage === 'voice' ? <VoiceGenerator /> : <Talk />}
+        {currentPage === 'voice' ? (
+          <VoiceGenerator />
+        ) : currentPage === 'talk' ? (
+          <Talk />
+        ) : (
+          <VideoTest />
+        )}
       </div>
     </div>
   );

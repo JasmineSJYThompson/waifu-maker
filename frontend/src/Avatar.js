@@ -9,65 +9,51 @@ const Avatar = ({
   currentMessage = '',
   onAvatarClick 
 }) => {
-  const [currentVideo, setCurrentVideo] = useState(null);
+  const [currentGif, setCurrentGif] = useState(null);
   const [showIdle, setShowIdle] = useState(true);
-  const videoRef = useRef(null);
+  const [gifLoaded, setGifLoaded] = useState(false);
+  const [gifError, setGifError] = useState(false);
+  const gifRef = useRef(null);
   const idleImageRef = useRef(null);
 
-  // Determine which video to use based on message length
-  const getVideoSource = (message) => {
+  // Determine which GIF to use based on message length
+  const getGifSource = (message) => {
     if (!message) return null;
     const wordCount = message.split(' ').length;
-    // Use talking_long.mp4 for longer messages (more than 10 words)
-    return wordCount > 10 ? '/talking_long.mp4' : '/talking.mp4';
+    // Use talking_long.gif for longer messages (more than 10 words)
+    return wordCount > 10 ? '/talking_long.gif' : '/talking.gif';
   };
 
-  // Handle video playback
+  // Handle GIF playback
   useEffect(() => {
     if (isSpeaking && currentMessage) {
-      const videoSource = getVideoSource(currentMessage);
-      setCurrentVideo(videoSource);
+      const gifSource = getGifSource(currentMessage);
+      setCurrentGif(gifSource);
       setShowIdle(false);
+      setGifError(false);
+      setGifLoaded(false);
       
-      // Start video playback
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(err => {
-          console.error('Error playing video:', err);
-          setShowIdle(true);
-        });
-      }
+      // Preload the GIF
+      const img = new Image();
+      img.onload = () => {
+        console.log('GIF loaded successfully');
+        setGifLoaded(true);
+        setGifError(false);
+      };
+      img.onerror = () => {
+        console.error('Error loading GIF');
+        setGifError(true);
+        setShowIdle(true);
+      };
+      img.src = gifSource;
     } else {
-      // Stop video and show idle
-      if (videoRef.current) {
-        videoRef.current.pause();
-      }
+      // Stop GIF and show idle
       setShowIdle(true);
-      setCurrentVideo(null);
+      setCurrentGif(null);
+      setGifLoaded(false);
+      setGifError(false);
     }
   }, [isSpeaking, currentMessage]);
-
-  // Handle video end
-  const handleVideoEnd = () => {
-    if (isSpeaking) {
-      // Loop the video while still speaking
-      if (videoRef.current) {
-        videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(err => {
-          console.error('Error looping video:', err);
-          setShowIdle(true);
-        });
-      }
-    } else {
-      setShowIdle(true);
-    }
-  };
-
-  // Handle video error
-  const handleVideoError = () => {
-    console.error('Video playback error');
-    setShowIdle(true);
-  };
 
   const handleAvatarClick = () => {
     if (onAvatarClick) {
@@ -102,26 +88,35 @@ const Avatar = ({
           )}
         </AnimatePresence>
 
-        {/* Talking Video */}
+        {/* Talking GIF */}
         <AnimatePresence>
-          {!showIdle && currentVideo && (
-            <motion.video
-              ref={videoRef}
-              className="avatar-video talking-video"
+          {!showIdle && currentGif && (
+            <motion.img
+              ref={gifRef}
+              src={currentGif}
+              alt="Talking Avatar"
+              className="avatar-gif talking-gif"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              onEnded={handleVideoEnd}
-              onError={handleVideoError}
-              muted
-              playsInline
-            >
-              <source src={currentVideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </motion.video>
+            />
           )}
         </AnimatePresence>
+
+        {/* Loading indicator for GIF */}
+        {!showIdle && currentGif && !gifLoaded && !gifError && (
+          <div className="gif-loading">
+            <div className="loading-spinner"></div>
+          </div>
+        )}
+
+        {/* Error indicator */}
+        {gifError && (
+          <div className="gif-error">
+            <span>GIF Error</span>
+          </div>
+        )}
 
         {/* Status Indicators */}
         <AnimatePresence>

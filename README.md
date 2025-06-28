@@ -19,13 +19,13 @@ A modern web application that combines ElevenLabs voice generation with Mistral 
 - **Visual Feedback**: Avatar expressions and status indicators
 
 ### 🎭 Avatar Features
-- **Video-based Avatar**: Realistic talking animations using video files
-- **Smart Video Selection**: Automatically chooses between talking.mp4 and talking_long.mp4 based on message length
+- **GIF-based Avatar**: Realistic talking animations using GIF files
+- **Smart GIF Selection**: Automatically chooses between talking.gif and talking_long.gif based on message length
 - **Idle State**: Shows idle_avatar.png when not speaking
 - **Seamless Transitions**: Smooth transitions between idle and talking states
 - **Status Indicators**: Visual feedback for speaking, listening, and idle states
 - **Responsive Design**: Adapts to different screen sizes
-- **Looping Animation**: Videos loop during speech for continuous talking effect
+- **Automatic Looping**: GIFs loop during speech for continuous talking effect
 
 ### 🎨 Modern UI
 - **Glassmorphism Design**: Beautiful glass-like interface
@@ -132,17 +132,17 @@ MISTRAL_API_KEY=your_mistral_api_key
 
 ## 🎨 Customization
 
-### Avatar Videos
-The avatar uses video files for realistic talking animations:
+### Avatar GIFs
+The avatar uses GIF files for realistic talking animations:
 
 - **idle_avatar.png**: Static image shown when not speaking
-- **talking.mp4**: Short talking animation for brief messages (≤10 words)
-- **talking_long.mp4**: Longer talking animation for extended messages (>10 words)
+- **talking.gif**: Short talking animation for brief messages (≤10 words)
+- **talking_long.gif**: Longer talking animation for extended messages (>10 words)
 
-### Video Selection Logic
-The system automatically chooses the appropriate video based on message length:
-- Messages with 10 words or fewer use `talking.mp4`
-- Messages with more than 10 words use `talking_long.mp4`
+### GIF Selection Logic
+The system automatically chooses the appropriate GIF based on message length:
+- Messages with 10 words or fewer use `talking.gif`
+- Messages with more than 10 words use `talking_long.gif`
 
 ### Custom Personalities
 Write custom personality descriptions to create unique AI behaviors. The personality badge on the avatar will display the detected personality type.
@@ -168,14 +168,14 @@ waifu_maker/
 ├── frontend/
 │   ├── public/
 │   │   ├── idle_avatar.png # Idle avatar image
-│   │   ├── talking.mp4     # Short talking animation
-│   │   ├── talking_long.mp4 # Long talking animation
+│   │   ├── talking.gif     # Short talking animation
+│   │   ├── talking_long.gif # Long talking animation
 │   │   └── index.html      # Main HTML file
 │   ├── src/
 │   │   ├── App.js          # Main app component
 │   │   ├── VoiceGenerator.js # Voice generation page
 │   │   ├── Talk.js         # Chat page with avatar
-│   │   ├── Avatar.js       # Video-based avatar component
+│   │   ├── Avatar.js       # GIF-based avatar component
 │   │   └── *.css           # Component styles
 │   └── package.json        # Frontend dependencies
 ├── requirements.txt        # Python dependencies
@@ -183,8 +183,8 @@ waifu_maker/
 ```
 
 ### Adding New Features
-- **New Avatar Videos**: Replace or add new video files in `frontend/public/`
-- **Video Selection Logic**: Modify the word count threshold in `Avatar.js`
+- **New Avatar GIFs**: Replace or add new GIF files in `frontend/public/`
+- **GIF Selection Logic**: Modify the word count threshold in `Avatar.js`
 - **Additional Personalities**: Update personality presets in `Talk.js`
 - **Custom Animations**: Extend Framer Motion animations for transitions
 
@@ -194,7 +194,7 @@ waifu_maker/
 1. **API Key Errors**: Ensure your API keys are correctly set in `backend/.env`
 2. **CORS Issues**: The backend is configured to allow requests from `localhost:3000`
 3. **Audio Playback**: Check browser autoplay policies and ensure audio is enabled
-4. **Avatar Not Animating**: Verify that Framer Motion and React Spring are installed
+4. **Avatar Not Animating**: Verify that GIF files are accessible and properly formatted
 
 ### Rate Limiting
 - ElevenLabs: Check your account limits
@@ -210,4 +210,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📞 Support
 
-If you encounter any issues or have questions, please open an issue on the repository. 
+If you encounter any issues or have questions, please open an issue on the repository.
