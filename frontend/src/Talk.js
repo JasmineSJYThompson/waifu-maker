@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import { Send, Volume2, Loader, MessageCircle, User, Bot, Settings } from 'lucide-react';
 import Avatar from './Avatar';
@@ -66,11 +66,7 @@ function Talk() {
     }
   }, [conversation]);
 
-  useEffect(() => {
-    fetchVoices();
-  }, []);
-
-  const fetchVoices = async () => {
+  const fetchVoices = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/voices`);
@@ -84,7 +80,11 @@ function Talk() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
+
+  useEffect(() => {
+    fetchVoices();
+  }, [fetchVoices]);
 
   const sendMessage = async () => {
     if (!message.trim()) {
@@ -140,7 +140,6 @@ function Talk() {
         // Convert base64 to audio URL and play
         if (response.data.audio) {
           const audioBlob = base64ToBlob(response.data.audio, 'audio/mpeg');
-          const url = URL.createObjectURL(audioBlob);
           
           // Clean up previous audio element
           if (audioElement) {

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Mic, MessageCircle, Video, Bot } from 'lucide-react';
 import VoiceGenerator from './VoiceGenerator';
 import Talk from './Talk';
@@ -9,9 +8,6 @@ import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('voice'); // 'voice', 'talk', 'agent', or 'test'
-
-  // API base URL
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   return (
     <div className="App">
