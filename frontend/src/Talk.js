@@ -141,7 +141,6 @@ function Talk() {
         if (response.data.audio) {
           const audioBlob = base64ToBlob(response.data.audio, 'audio/mpeg');
           const url = URL.createObjectURL(audioBlob);
-          setAudioUrl(url);
           
           // Clean up previous audio element
           if (audioElement) {
