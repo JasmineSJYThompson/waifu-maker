@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Mic, Play, Download, Volume2, Loader, MessageCircle, Home, Video, Headphones } from 'lucide-react';
+import { Mic, Play, Download, Volume2, Loader, MessageCircle, Home, Video } from 'lucide-react';
 import VoiceGenerator from './VoiceGenerator';
 import Talk from './Talk';
 import VideoTest from './VideoTest';
-import VTuber from './VTuber';
 import './App.css';
 
 function App() {
@@ -172,13 +171,6 @@ function App() {
             <Video size={20} />
             Video Test
           </button>
-          <button
-            className={`nav-button ${currentPage === 'vtuber' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('vtuber')}
-          >
-            <Headphones size={20} />
-            VTuber Mode
-          </button>
         </div>
 
         {/* Page Content */}
@@ -186,10 +178,8 @@ function App() {
           <VoiceGenerator />
         ) : currentPage === 'talk' ? (
           <Talk />
-        ) : currentPage === 'test' ? (
-          <VideoTest />
         ) : (
-          <VTuber />
+          <VideoTest />
         )}
       </div>
     </div>
