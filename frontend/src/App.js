@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Mic, Play, Download, Volume2, Loader, MessageCircle, Home, Video } from 'lucide-react';
+import { Mic, Play, Download, Volume2, Loader, MessageCircle, Home, Video, Bot } from 'lucide-react';
 import VoiceGenerator from './VoiceGenerator';
 import Talk from './Talk';
 import VideoTest from './VideoTest';
+import Agent from './Agent';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('voice'); // 'voice', 'talk', or 'test'
+  const [currentPage, setCurrentPage] = useState('voice'); // 'voice', 'talk', 'agent', or 'test'
   const [text, setText] = useState('');
   const [selectedVoice, setSelectedVoice] = useState('');
   const [voices, setVoices] = useState([]);
@@ -165,6 +166,13 @@ function App() {
             Talk with AI
           </button>
           <button
+            className={`nav-button ${currentPage === 'agent' ? 'active' : ''}`}
+            onClick={() => setCurrentPage('agent')}
+          >
+            <Bot size={20} />
+            Talk with Agent
+          </button>
+          <button
             className={`nav-button ${currentPage === 'test' ? 'active' : ''}`}
             onClick={() => setCurrentPage('test')}
           >
@@ -178,6 +186,8 @@ function App() {
           <VoiceGenerator />
         ) : currentPage === 'talk' ? (
           <Talk />
+        ) : currentPage === 'agent' ? (
+          <Agent />
         ) : (
           <VideoTest />
         )}
