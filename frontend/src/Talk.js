@@ -139,8 +139,6 @@ function Talk() {
 
         // Convert base64 to audio URL and play
         if (response.data.audio) {
-          const audioBlob = base64ToBlob(response.data.audio, 'audio/mpeg');
-          
           // Clean up previous audio element
           if (audioElement) {
             URL.revokeObjectURL(audioElement.src);
