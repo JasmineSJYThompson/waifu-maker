@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Mic, Send, Volume2, Loader, MessageCircle, User, Bot, Settings } from 'lucide-react';
+import { Send, Volume2, Loader, MessageCircle, User, Bot, Settings } from 'lucide-react';
 import Avatar from './Avatar';
 import './Talk.css';
 
@@ -11,7 +11,6 @@ function Talk() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [conversation, setConversation] = useState([]);
-  const [audioUrl, setAudioUrl] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioElement, setAudioElement] = useState(null);
   const [showPersonality, setShowPersonality] = useState(false);

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Mic, Play, Download, Volume2, Loader } from 'lucide-react';
+import './VoiceGenerator.css';
 
 function VoiceGenerator() {
   const [text, setText] = useState('');
@@ -16,11 +17,7 @@ function VoiceGenerator() {
   // API base URL
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-  useEffect(() => {
-    fetchVoices();
-  }, []);
-
-  const fetchVoices = async () => {
+  const fetchVoices = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/voices`);
@@ -34,7 +31,11 @@ function VoiceGenerator() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
+
+  useEffect(() => {
+    fetchVoices();
+  }, [fetchVoices]);
 
   const generateVoice = async () => {
     if (!text.trim()) {
